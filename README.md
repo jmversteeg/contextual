@@ -1,6 +1,6 @@
 contextual
 ==========
- > Elegant object-oriented context pattern implementation
+ > Simple object-oriented contexts
 
 [![Build Status][travis-image]][travis-url]
 [![Code Quality][scrutinizer-g-image]][scrutinizer-g-url]

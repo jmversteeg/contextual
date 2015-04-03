@@ -1,6 +1,6 @@
 {
   "name":        "jmversteeg/contextual",
-  "description": "Elegant object-oriented context pattern implementation",
+  "description": "Simple object-oriented contexts",
   "license":     "MIT",
   "authors":     [
     {
