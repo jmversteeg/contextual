@@ -10,14 +10,14 @@ class ContextTest extends \PHPUnit_Framework_TestCase
     public function testDefaults ()
     {
         $typedContext = new TypedContext();
-        $this->assertEquals('foo', $typedContext->getType());
+        $this->assertEquals('foo', $typedContext->type);
     }
 
     public function testValue ()
     {
         $typedContext = new TypedContext();
-        $typedContext->setType('bar');
-        $this->assertEquals('bar', $typedContext->getType());
+        $typedContext->type = 'bar';
+        $this->assertEquals('bar', $typedContext->type);
     }
 
     public function testCreateSubContext ()
@@ -31,17 +31,17 @@ class ContextTest extends \PHPUnit_Framework_TestCase
     {
         $typedContext = new TypedContext();
         $subContext   = $typedContext->createSubContext();
-        $typedContext->setType('bar');
-        $this->assertEquals('bar', $subContext->getType());
+        $typedContext->type = 'bar';
+        $this->assertEquals('bar', $subContext->type);
     }
 
     public function testValueOverride ()
     {
         $typedContext = new TypedContext();
         $subContext   = $typedContext->createSubContext();
-        $subContext->setType('foobaz');
-        $typedContext->setType('bar');
-        $this->assertEquals('foobaz', $subContext->getType());
+        $subContext->type = 'foobaz';
+        $typedContext->type = 'bar';
+        $this->assertEquals('foobaz', $subContext->type);
     }
 
     public function testGetContextTree ()
@@ -59,8 +59,8 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $subContextB  = $subContextA->createSubContext();
         $subContextC  = $subContextB->createSubContext();
 
-        $subContextB->setType('bar');
-        $subContextC->setType('baz');
+        $subContextB->type = 'bar';
+        $subContextC->type = 'baz';
 
         $this->assertEquals(['foo'], $typedContext->getValueTree('type'));
         $this->assertEquals(['foo'], $subContextA->getValueTree('type'));

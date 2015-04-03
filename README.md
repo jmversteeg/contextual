@@ -15,57 +15,32 @@ class ResponseContext extends \jmversteeg\contextual\Context
 {
 
     // Declare default values with a preceding underscore
+    
     private $_JSON  = false;
     private $_admin = false;
+    private $_type  = 'body';
 
-    /**
-     * @return boolean
-     */
-    public function isJSON ()
-    {
-        return $this->JSON;
-    }
-
-    /**
-     * @param boolean $JSON
-     */
-    public function setJSON ($JSON)
-    {
-        $this->JSON = $JSON;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isAdmin ()
-    {
-        return $this->admin;
-    }
-
-    /**
-     * @param boolean $admin
-     */
-    public function setAdmin ($admin)
-    {
-        $this->admin = $admin;
-    }
 }
 
 $responseContext = new ResponseContext();
-$responseContext->setJSON(true);
+$responseContext->JSON = true;
+$responseContext->type = 'ajax';
 
-$responseContext->isJSON();
+$responseContext->JSON;
 // => true
-$responseContext->isAdmin();
+$responseContext->admin;
 // => false
 
 $subContext = $responseContext->createSubContext();
-$subContext->setAdmin(true);
+$subContext->admin = true;
+$subContext->type = 'admin';
 
-$subContext->isJSON();
+$subContext->JSON;
 // => true
-$subContext->isAdmin();
+$subContext->admin;
 // => true
+$subContext->getValueTree('type');
+// => ['ajax', 'admin'];
 
 ```
  
