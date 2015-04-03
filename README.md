@@ -7,8 +7,67 @@ contextual
 [![Code Coverage][coveralls-image]][coveralls-url]
 [![Packagist Version][packagist-image]][packagist-url]
 
-#### todo
- - Add example
+#### example usage
+
+```php
+
+class ResponseContext extends \jmversteeg\contextual\Context
+{
+
+    // Declare default values with a preceding underscore
+    private $_JSON  = false;
+    private $_admin = false;
+
+    /**
+     * @return boolean
+     */
+    public function isJSON ()
+    {
+        return $this->JSON;
+    }
+
+    /**
+     * @param boolean $JSON
+     */
+    public function setJSON ($JSON)
+    {
+        $this->JSON = $JSON;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAdmin ()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param boolean $admin
+     */
+    public function setAdmin ($admin)
+    {
+        $this->admin = $admin;
+    }
+}
+
+$responseContext = new ResponseContext();
+$responseContext->setJSON(true);
+
+$responseContext->isJSON();
+// => true
+$responseContext->isAdmin();
+// => false
+
+$subContext = $responseContext->createSubContext();
+$subContext->setAdmin(true);
+
+$subContext->isJSON();
+// => true
+$subContext->isAdmin();
+// => true
+
+```
  
 [travis-image]: https://img.shields.io/travis/jmversteeg/contextual.svg?style=flat-square
 [travis-url]: https://travis-ci.org/jmversteeg/contextual
