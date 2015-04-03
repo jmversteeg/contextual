@@ -38,7 +38,7 @@ class Context
         $defaultProperties = $reflectionClass->getDefaultProperties();
         foreach ($reflectionClass->getProperties() as $property)
             if (!$property->isStatic() && $property->isDefault() && preg_match('/^_(.*)$/', $property->getName(), $matches))
-                $this->defaults[$matches[1]] = $defaultProperties[$property->name];
+                $this->setDefault($matches[1], $defaultProperties[$property->name]);
     }
 
     /**
