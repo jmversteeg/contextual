@@ -30,7 +30,7 @@ class Context
      *
      * @param Context|null $parentContext
      */
-    function __construct ($parentContext = null)
+    public function __construct ($parentContext = null)
     {
         $this->parentContext = $parentContext;
 
@@ -98,7 +98,7 @@ class Context
         return $values;
     }
 
-    function __get ($name)
+    public function __get ($name)
     {
         if (array_key_exists($name, $this->values))
             return $this->values[$name];
@@ -110,7 +110,7 @@ class Context
             return null;
     }
 
-    function __set ($name, $value)
+    public function __set ($name, $value)
     {
         $this->values[$name] = $value;
     }
