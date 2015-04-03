@@ -1,6 +1,6 @@
 contextual
 ==========
-**Elegant object-oriented context pattern implementation**
+ > Elegant object-oriented context pattern implementation
 
 [![Build Status][travis-image]][travis-url]
 [![Code Quality][scrutinizer-g-image]][scrutinizer-g-url]
@@ -55,3 +55,7 @@ $subContext->getValueTree('type');
 
 [packagist-image]: https://img.shields.io/packagist/v/jmversteeg/contextual.svg?style=flat-square
 [packagist-url]: https://packagist.org/packages/jmversteeg/contextual
+
+## License
+
+MIT © JM Versteeg
