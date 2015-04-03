@@ -15,7 +15,7 @@
   },
   "autoload":    {
     "psr-4": {
-      "jmversteeg\\contextual\\": "lib/jmversteeg/contextual/"
+      "jmversteeg\\contextual\\": "src/jmversteeg/contextual/"
     }
   }
 }
