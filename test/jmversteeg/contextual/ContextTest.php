@@ -20,6 +20,12 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $typedContext->type);
     }
 
+    public function testUnknownValue ()
+    {
+        $typedContext = new TypedContext();
+        $this->assertEquals(null, $typedContext->foobarbaz);
+    }
+
     public function testCreateSubContext ()
     {
         $typedContext = new TypedContext();
