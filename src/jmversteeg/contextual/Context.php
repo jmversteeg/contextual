@@ -34,11 +34,7 @@ class Context
     {
         $this->parentContext = $parentContext;
 
-        $reflectionClass   = new \ReflectionClass(get_class($this));
-        $defaultProperties = $reflectionClass->getDefaultProperties();
-        foreach ($reflectionClass->getProperties() as $property)
-            if (!$property->isStatic() && $property->isDefault() && preg_match('/^_(.*)$/', $property->getName(), $matches))
-                $this->setDefault($matches[1], $defaultProperties[$property->name]);
+        $this->importDefaults();
     }
 
     /**
@@ -90,9 +86,7 @@ class Context
         $values      = array();
         foreach ($contextTree as $context) {
             $value = $context->{$name};
-            if ($value === null)
-                continue;
-            if (!$removeDuplicates || (!count($values) || $values[count($values) - 1] !== $value))
+            if ($value !== null && (!$removeDuplicates || (!count($values) || $values[count($values) - 1] !== $value)))
                 $values[] = $value;
         }
         return $values;
@@ -104,14 +98,24 @@ class Context
             return $this->values[$name];
         else if ($this->parentContext !== null && ($parentValue = $this->parentContext->{$name}) !== null)
             return $parentValue;
-        else if (array_key_exists($name, $this->defaults))
-            return $this->defaults[$name];
         else
-            return null;
+            return array_key_exists($name, $this->defaults) ? $this->defaults[$name] : null;
     }
 
     public function __set ($name, $value)
     {
         $this->values[$name] = $value;
+    }
+
+    /**
+     * Loads all the default properties starting with an underscore into the defaults array
+     */
+    private function importDefaults ()
+    {
+        $reflectionClass   = new \ReflectionClass(get_class($this));
+        $defaultProperties = $reflectionClass->getDefaultProperties();
+        foreach ($reflectionClass->getProperties() as $property)
+            if (!$property->isStatic() && $property->isDefault() && preg_match('/^_(.*)$/', $property->name, $matches))
+                $this->setDefault($matches[1], $defaultProperties[$property->name]);
     }
 }
