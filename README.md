@@ -7,7 +7,7 @@ contextual
 [![Code Coverage][coveralls-image]][coveralls-url]
 [![Packagist Version][packagist-image]][packagist-url]
 
-#### example usage
+## Usage
 
 ```php
 
