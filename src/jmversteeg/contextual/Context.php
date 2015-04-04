@@ -50,6 +50,18 @@ class Context
     }
 
     /**
+     * Checks whether a default value is set for the given key
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function isDefaultSet ($key)
+    {
+        return isset($this->defaults[$key]);
+    }
+
+    /**
      * Creates a subcontext of the same type as the current context.
      * @return static
      */
@@ -112,10 +124,18 @@ class Context
      */
     private function importDefaults ()
     {
-        $reflectionClass   = new \ReflectionClass(get_class($this));
-        $defaultProperties = $reflectionClass->getDefaultProperties();
-        foreach ($reflectionClass->getProperties() as $property)
-            if (!$property->isStatic() && $property->isDefault() && preg_match('/^_(.*)$/', $property->name, $matches))
-                $this->setDefault($matches[1], $defaultProperties[$property->name]);
+        $class = get_class($this);
+        do {
+            $reflectionClass   = new \ReflectionClass($class);
+            $defaultProperties = $reflectionClass->getDefaultProperties();
+            foreach ($reflectionClass->getProperties() as $property)
+                if (
+                    !$property->isStatic() &&
+                    $property->isDefault() &&
+                    preg_match('/^_(.*)$/', $property->name, $matches) &&
+                    !$this->isDefaultSet($matches[1])
+                )
+                    $this->setDefault($matches[1], $defaultProperties[$property->name]);
+        } while ($class = get_parent_class($class));
     }
 }

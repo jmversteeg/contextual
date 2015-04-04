@@ -3,6 +3,7 @@
 namespace test\jmversteeg\contextual;
 
 use test\jmversteeg\contextual\helper\TypedContext;
+use test\jmversteeg\contextual\helper\SubTypedContext;
 
 class ContextTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,11 +12,19 @@ class ContextTest extends \PHPUnit_Framework_TestCase
     {
         $typedContext = new TypedContext();
         $this->assertEquals('foo', $typedContext->type);
+        $this->assertEquals(false, $typedContext->beepboop);
+    }
+
+    public function testSubClassDefaults ()
+    {
+        $subTypedContext = new SubTypedContext();
+        $this->assertEquals('foo', $subTypedContext->type);
+        $this->assertEquals(true, $subTypedContext->beepboop);
     }
 
     public function testValue ()
     {
-        $typedContext = new TypedContext();
+        $typedContext       = new TypedContext();
         $typedContext->type = 'bar';
         $this->assertEquals('bar', $typedContext->type);
     }
@@ -35,17 +44,17 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
     public function testValueInheritance ()
     {
-        $typedContext = new TypedContext();
-        $subContext   = $typedContext->createSubContext();
+        $typedContext       = new TypedContext();
+        $subContext         = $typedContext->createSubContext();
         $typedContext->type = 'bar';
         $this->assertEquals('bar', $subContext->type);
     }
 
     public function testValueOverride ()
     {
-        $typedContext = new TypedContext();
-        $subContext   = $typedContext->createSubContext();
-        $subContext->type = 'foobaz';
+        $typedContext       = new TypedContext();
+        $subContext         = $typedContext->createSubContext();
+        $subContext->type   = 'foobaz';
         $typedContext->type = 'bar';
         $this->assertEquals('foobaz', $subContext->type);
     }

@@ -8,5 +8,6 @@ class TypedContext extends Context
 {
 
     private $_type = 'foo';
+    private $_beepboop = false;
 
 }
