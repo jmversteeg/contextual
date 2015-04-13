@@ -106,7 +106,9 @@ class Context
 
     public function __get ($name)
     {
-        if (array_key_exists($name, $this->values))
+        if (property_exists($this, $name))
+            return $this->{$name};
+        else if (array_key_exists($name, $this->values))
             return $this->values[$name];
         else if ($this->parentContext !== null && ($parentValue = $this->parentContext->{$name}) !== null)
             return $parentValue;
@@ -116,7 +118,10 @@ class Context
 
     public function __set ($name, $value)
     {
-        $this->values[$name] = $value;
+        if (property_exists($this, $name))
+            $this->{$name} = $value;
+        else
+            $this->values[$name] = $value;
     }
 
     /**
