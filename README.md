@@ -11,6 +11,11 @@ contextual
 
 ```php
 
+/**
+ * @property boolean $JSON
+ * @property boolean $admin
+ * @property string  $type
+ */
 class ResponseContext extends \jmversteeg\contextual\Context
 {
 
@@ -22,25 +27,24 @@ class ResponseContext extends \jmversteeg\contextual\Context
 
 }
 
-$responseContext = new ResponseContext();
-$responseContext->JSON = true;
-$responseContext->type = 'ajax';
+$responseContext = new ResponseContext([
+    'JSON' => true,
+    'type' => 'ajax'
+]);
 
 $responseContext->JSON;
 // => true
 $responseContext->admin;
 // => false
 
-$subContext = $responseContext->createSubContext();
-$subContext->admin = true;
-$subContext->type = 'admin';
+$subContext = $responseContext->createSubContext([
+    'admin' => true
+]);
 
 $subContext->JSON;
 // => true
 $subContext->admin;
 // => true
-$subContext->getValueTree('type');
-// => ['ajax', 'admin'];
 
 ```
  
