@@ -35,8 +35,7 @@ class Context
     {
         $this->parentContext = $parentContext;
         $this->setDefaults();
-        foreach ($values as $key => $value)
-            $this->{$key} = $value;
+        $this->set($values);
     }
 
     /**
@@ -105,6 +104,18 @@ class Context
                 $values[] = $value;
         }
         return $values;
+    }
+
+    /**
+     * Helper function that allows to define multiple value "overrides" at once
+     * @param array $values
+     * @return $this
+     */
+    public function set ($values = [])
+    {
+        foreach ($values as $key => $value)
+            $this->{$key} = $value;
+        return $this;
     }
 
     public function __get ($name)
