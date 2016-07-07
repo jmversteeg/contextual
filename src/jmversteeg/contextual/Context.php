@@ -151,14 +151,13 @@ class Context
         do {
             $reflectionClass   = new \ReflectionClass($class);
             $defaultProperties = $reflectionClass->getDefaultProperties();
-            foreach ($reflectionClass->getProperties() as $property)
+            foreach ($defaultProperties as $name => $value) {
                 if (
-                    !$property->isStatic() &&
-                    $property->isDefault() &&
-                    preg_match('/^_(.*)$/', $property->name, $matches) &&
+                    preg_match('/^_(.*)$/', $name, $matches) &&
                     !$this->isDefaultSet($matches[1])
                 )
-                    $this->setDefault($matches[1], $defaultProperties[$property->name]);
+                    $this->setDefault($matches[1], $value);
+            }
         } while ($class = get_parent_class($class));
     }
 }
